@@ -1,0 +1,33 @@
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Node / NestJS
+server/node_modules/
+server/dist/
+server/npm-debug.log*
+server/yarn-debug.log*
+server/yarn-error.log*
+
+# Flutter / Dart
+client/.dart_tool/
+client/.flutter-plugins
+client/.flutter-plugins-dependencies
+client/build/
+client/.idea/
+client/*.iml
+
+# SQLite local test files
+*.sqlite
+*.sqlite-journal
+
+# OS files
+.DS_Store
+Thumbs.db
+
+mobile_ui_ux_screen_map_workflow_specification.md
+software_requirements_specification.md
+AGENTS.md
+data_dictionary_sync_protocol_specification.md
+.agents

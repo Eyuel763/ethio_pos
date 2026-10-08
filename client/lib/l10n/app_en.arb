@@ -1,0 +1,46 @@
+{
+  "@@locale": "en",
+  "appTitle": "EthioPOS",
+  "posTab": "POS / Register",
+  "ledgerTab": "Credit Ledger (ዕዳ)",
+  "inventoryTab": "Inventory & Stock",
+
+  "searchProduct": "Search product...",
+  "scanBarcode": "Scan Barcode",
+  "allCategories": "All",
+  "currentCart": "Current Cart Items",
+  "subtotal": "Subtotal",
+  "clearCart": "CLEAR CART",
+  "charge": "CHARGE",
+
+  "paymentMethod": "Payment Method",
+  "cash": "Cash",
+  "mobileTransfer": "Mobile Transfer (Telebirr/CBE)",
+  "creditTab": "Credit Tab / ዕዳ",
+  "selectCustomer": "Select Customer",
+  "amountPaidNow": "Amount Paid Now",
+  "amountToCredit": "Amount to Credit",
+  "confirmSale": "CONFIRM SALE",
+  "cancel": "Cancel",
+
+  "totalOutstandingDebt": "Total Outstanding Debt",
+  "newCustomer": "New Customer",
+  "recordRepayment": "Record Repayment",
+  "shareReceipt": "Share Receipt",
+  "repaymentHistory": "Repayment History",
+  "previousBalance": "Previous Balance",
+  "newTotalBalance": "New Total Balance",
+  "thankYou": "Thank you!",
+
+  "allProducts": "All Items",
+  "lowStock": "Low Stock",
+  "outOfStock": "Out of Stock",
+  "stockLevel": "Stock Level",
+  "sellingPrice": "Selling Price",
+  "addStock": "Stock +",
+  "addItem": "Add Item",
+
+  "synced": "Synced",
+  "syncing": "Syncing",
+  "offline": "Offline"
+}

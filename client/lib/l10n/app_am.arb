@@ -1,0 +1,46 @@
+{
+  "@@locale": "am",
+  "appTitle": "ኢትዮ ፖስ",
+  "posTab": "መሸጫ (POS)",
+  "ledgerTab": "የደንበኞች ዕዳ",
+  "inventoryTab": "ዕቃዎችና ክምችት",
+
+  "searchProduct": "ዕቃ ፈልግ...",
+  "scanBarcode": "ባርኮድ ቃኝ",
+  "allCategories": "ሁሉም",
+  "currentCart": "የተመረጡ ዕቃዎች",
+  "subtotal": "ድምር",
+  "clearCart": "አጽዳ",
+  "charge": "ክፈል",
+
+  "paymentMethod": "የክፍያ ዘዴ",
+  "cash": "በጥሬ ገንዘብ",
+  "mobileTransfer": "ሞባይል ባንኪንግ (ቴሌብር/CBE)",
+  "creditTab": "የብድር ሂሳብ (ዕዳ)",
+  "selectCustomer": "ደንበኛ ምረጥ",
+  "amountPaidNow": "አሁን የተከፈለ",
+  "amountToCredit": "ወደ ዕዳ የሚዛወር",
+  "confirmSale": "ጨርስ",
+  "cancel": "ሰርዝ",
+
+  "totalOutstandingDebt": "ጠቅላላ ያልተከፈለ ዕዳ",
+  "newCustomer": "አዲስ ደንበኛ",
+  "recordRepayment": "ዕዳ ክፈል",
+  "shareReceipt": "ደረሰኝ ላክ",
+  "repaymentHistory": "የክፍያ ታሪክ",
+  "previousBalance": "የቀደመ ዕዳ",
+  "newTotalBalance": "አሁን ያለዎት ጠቅላላ ዕዳ",
+  "thankYou": "እናመሰግናለን!",
+
+  "allProducts": "ሁሉም ዕቃዎች",
+  "lowStock": "አነስተኛ ክምችት",
+  "outOfStock": "ያለቀ",
+  "stockLevel": "የክምችት መጠን",
+  "sellingPrice": "የመሸጫ ዋጋ",
+  "addStock": "ክምችት ጨምር",
+  "addItem": "ዕቃ መዝግብ",
+
+  "synced": "ተመሳስሏል",
+  "syncing": "በማመሳሰል ላይ",
+  "offline": "ያለ ኢንተርኔት (ኦፍላይን)"
+}

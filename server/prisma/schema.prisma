@@ -1,0 +1,158 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Shop {
+  id              String           @id @default(uuid())
+  name            String
+  ownerName       String?          @map("owner_name")
+  phoneNumber     String?          @map("phone_number")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+
+  users           User[]
+  products        Product[]
+  customers       Customer[]
+  sales           Sale[]
+  debtRepayments  DebtRepayment[]
+  syncLogs        ProcessedMutation[]
+
+  @@map("shops")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  shopId       String   @map("shop_id")
+  username     String   @unique
+  passwordHash String   @map("password_hash")
+  fullName     String?  @map("full_name")
+  role         String   @default("operator") // "admin" | "operator"
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  shop         Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@index([shopId])
+  @@map("users")
+}
+
+model Product {
+  id            String     @id // Client-generated UUID (v4)
+  shopId        String     @map("shop_id")
+  barcode       String?
+  nameAm        String     @map("name_am")
+  nameEn        String     @map("name_en")
+  category      String     @default("General")
+  unitType      String     @default("piece") @map("unit_type") // piece, kg, liter, packet, bundle
+  sellingPrice  Decimal    @map("selling_price") @db.Decimal(10, 2)
+  costPrice     Decimal    @default(0.00) @map("cost_price") @db.Decimal(10, 2)
+  stockQuantity Decimal    @default(0.000) @map("stock_quantity") @db.Decimal(10, 3)
+  minStockLevel Decimal    @default(5.000) @map("min_stock_level") @db.Decimal(10, 3)
+  isDeleted     Boolean    @default(false) @map("is_deleted")
+  createdAt     DateTime   @default(now()) @map("created_at")
+  updatedAt     DateTime   @updatedAt @map("updated_at")
+
+  shop          Shop       @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  saleItems     SaleItem[]
+
+  @@index([shopId])
+  @@index([barcode])
+  @@map("products")
+}
+
+model Customer {
+  id             String          @id // Client-generated UUID (v4)
+  shopId         String          @map("shop_id")
+  fullName       String          @map("full_name")
+  phoneNumber    String?         @map("phone_number")
+  totalDebt      Decimal         @default(0.00) @map("total_debt") @db.Decimal(10, 2)
+  isDeleted      Boolean         @default(false) @map("is_deleted")
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  shop           Shop            @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  sales          Sale[]
+  debtRepayments DebtRepayment[]
+
+  @@index([shopId])
+  @@index([phoneNumber])
+  @@map("customers")
+}
+
+model Sale {
+  id          String     @id // Client-generated UUID (v4)
+  shopId      String     @map("shop_id")
+  customerId  String?    @map("customer_id")
+  paymentType String     @map("payment_type") // cash, mobile_transfer, credit
+  subtotal    Decimal    @db.Decimal(10, 2)
+  discount    Decimal    @default(0.00) @db.Decimal(10, 2)
+  grandTotal  Decimal    @map("grand_total") @db.Decimal(10, 2)
+  amountPaid  Decimal    @map("amount_paid") @db.Decimal(10, 2)
+  amountDue   Decimal    @map("amount_due") @db.Decimal(10, 2)
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  shop        Shop       @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  customer    Customer?  @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  items       SaleItem[]
+
+  @@index([shopId])
+  @@index([customerId])
+  @@map("sales")
+}
+
+model SaleItem {
+  id          String   @id // Client-generated UUID (v4)
+  saleId      String   @map("sale_id")
+  productId   String   @map("product_id")
+  productName String   @map("product_name") // Snapshot of product name at time of sale
+  unitPrice   Decimal  @map("unit_price") @db.Decimal(10, 2)
+  quantity    Decimal  @db.Decimal(10, 3)
+  totalPrice  Decimal  @map("total_price") @db.Decimal(10, 2)
+
+  sale        Sale     @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@index([saleId])
+  @@index([productId])
+  @@map("sale_items")
+}
+
+model DebtRepayment {
+  id            String   @id // Client-generated UUID (v4)
+  shopId        String   @map("shop_id")
+  customerId    String   @map("customer_id")
+  amount        Decimal  @db.Decimal(10, 2)
+  paymentMethod String   @default("cash") @map("payment_method") // cash, telebirr, cbe_birr, other
+  note          String?
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  shop          Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  customer      Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([shopId])
+  @@index([customerId])
+  @@map("debt_repayments")
+}
+
+// Backend idempotency record for tracking processed mutations from client SyncQueue
+model ProcessedMutation {
+  id          String   @id @default(uuid())
+  shopId      String   @map("shop_id")
+  syncId      Int      @map("sync_id") // Client sequence ID
+  entityType  String   @map("entity_type") // product, sale, customer, debt_repayment
+  entityId    String   @map("entity_id") // UUID of entity
+  operation   String   // CREATE, UPDATE, DELETE
+  processedAt DateTime @default(now()) @map("processed_at")
+
+  shop        Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@unique([shopId, entityId, operation])
+  @@index([shopId, syncId])
+  @@map("processed_mutations")
+}
