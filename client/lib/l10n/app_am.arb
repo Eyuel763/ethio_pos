@@ -42,5 +42,32 @@
 
   "synced": "ተመሳስሏል",
   "syncing": "በማመሳሰል ላይ",
-  "offline": "ያለ ኢንተርኔት (ኦፍላይን)"
+  "offline": "ያለ ኢንተርኔት (ኦፍላይን)",
+
+  "searchCustomer": "ስም ወይም ስልክ ፈልግ...",
+  "customerList": "የደንበኞች ዝርዝር",
+  "balance": "ያለባቸው ዕዳ",
+  "lastActivity": "የመጨረሻ እንቅስቃሴ",
+  "noCustomersFound": "ምንም ደንበኛ አልተገኘም",
+  "phone": "ስልክ",
+  "customerName": "የደንበኛ ስም",
+  "phoneNumber": "የስልክ ቁጥር",
+  "saveCustomer": "ደንበኛ መዝግብ",
+  "repaymentAmount": "የሚከፈለው መጠን",
+  "saveRepayment": "ክፍያ መዝግብ",
+  "remainingDebt": "የሚቀረው ዕዳ",
+  "referenceOrNote": "ማስታወሻ / ደረሰኝ ቁጥር (አስፈላጊ ከሆነ)",
+  "shareSummary": "ዕዳ በቴሌግራም/SMS ላክ",
+  "transactionHistory": "የግዢና የክፍያ ታሪክ",
+  "creditSale": "የብድር ሽያጭ",
+  "repayment": "የዕዳ ክፍያ",
+  "itemsPurchased": "የተገዙ ዕቃዎች",
+  "noTransactionsRecorded": "ምንም የግዢና የክፍያ ታሪክ የለም",
+  "copiedToClipboard": "ደረሰኙ ኮፒ ተደርጓል!",
+  "fullAmount": "ሙሉውን",
+  "debtSummary": "የብድር ማጠቃለያ ደረሰኝ",
+  "copy": "ኮፒ አድርግ",
+  "close": "ዝጋ",
+  "telebirr": "ቴሌብር",
+  "cbeBirr": "ሲቢኢ ብር"
 }

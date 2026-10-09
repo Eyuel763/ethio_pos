@@ -122,4 +122,82 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get offline => 'ያለ ኢንተርኔት (ኦፍላይን)';
+
+  @override
+  String get searchCustomer => 'ስም ወይም ስልክ ፈልግ...';
+
+  @override
+  String get customerList => 'የደንበኞች ዝርዝር';
+
+  @override
+  String get balance => 'ያለባቸው ዕዳ';
+
+  @override
+  String get lastActivity => 'የመጨረሻ እንቅስቃሴ';
+
+  @override
+  String get noCustomersFound => 'ምንም ደንበኛ አልተገኘም';
+
+  @override
+  String get phone => 'ስልክ';
+
+  @override
+  String get customerName => 'የደንበኛ ስም';
+
+  @override
+  String get phoneNumber => 'የስልክ ቁጥር';
+
+  @override
+  String get saveCustomer => 'ደንበኛ መዝግብ';
+
+  @override
+  String get repaymentAmount => 'የሚከፈለው መጠን';
+
+  @override
+  String get saveRepayment => 'ክፍያ መዝግብ';
+
+  @override
+  String get remainingDebt => 'የሚቀረው ዕዳ';
+
+  @override
+  String get referenceOrNote => 'ማስታወሻ / ደረሰኝ ቁጥር (አስፈላጊ ከሆነ)';
+
+  @override
+  String get shareSummary => 'ዕዳ በቴሌግራም/SMS ላክ';
+
+  @override
+  String get transactionHistory => 'የግዢና የክፍያ ታሪክ';
+
+  @override
+  String get creditSale => 'የብድር ሽያጭ';
+
+  @override
+  String get repayment => 'የዕዳ ክፍያ';
+
+  @override
+  String get itemsPurchased => 'የተገዙ ዕቃዎች';
+
+  @override
+  String get noTransactionsRecorded => 'ምንም የግዢና የክፍያ ታሪክ የለም';
+
+  @override
+  String get copiedToClipboard => 'ደረሰኙ ኮፒ ተደርጓል!';
+
+  @override
+  String get fullAmount => 'ሙሉውን';
+
+  @override
+  String get debtSummary => 'የብድር ማጠቃለያ ደረሰኝ';
+
+  @override
+  String get copy => 'ኮፒ አድርግ';
+
+  @override
+  String get close => 'ዝጋ';
+
+  @override
+  String get telebirr => 'ቴሌብር';
+
+  @override
+  String get cbeBirr => 'ሲቢኢ ብር';
 }

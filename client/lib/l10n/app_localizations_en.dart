@@ -122,4 +122,82 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get offline => 'Offline';
+
+  @override
+  String get searchCustomer => 'Search customer name or phone...';
+
+  @override
+  String get customerList => 'Customer List';
+
+  @override
+  String get balance => 'Balance';
+
+  @override
+  String get lastActivity => 'Last Activity';
+
+  @override
+  String get noCustomersFound => 'No customers found';
+
+  @override
+  String get phone => 'Phone';
+
+  @override
+  String get customerName => 'Customer Name';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get saveCustomer => 'Save Customer';
+
+  @override
+  String get repaymentAmount => 'Repayment Amount';
+
+  @override
+  String get saveRepayment => 'Save Repayment';
+
+  @override
+  String get remainingDebt => 'Remaining Debt';
+
+  @override
+  String get referenceOrNote => 'Reference / Note (Optional)';
+
+  @override
+  String get shareSummary => 'Share Summary via Telegram/SMS';
+
+  @override
+  String get transactionHistory => 'Transaction History';
+
+  @override
+  String get creditSale => 'Credit Sale';
+
+  @override
+  String get repayment => 'Repayment';
+
+  @override
+  String get itemsPurchased => 'Items Purchased';
+
+  @override
+  String get noTransactionsRecorded => 'No transactions recorded yet';
+
+  @override
+  String get copiedToClipboard => 'Receipt copied to clipboard!';
+
+  @override
+  String get fullAmount => 'Full Amount';
+
+  @override
+  String get debtSummary => 'Debt Summary';
+
+  @override
+  String get copy => 'Copy';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get telebirr => 'Telebirr';
+
+  @override
+  String get cbeBirr => 'CBE Birr';
 }

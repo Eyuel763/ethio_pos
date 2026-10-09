@@ -325,6 +325,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Offline'**
   String get offline;
+
+  /// No description provided for @searchCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Search customer name or phone...'**
+  String get searchCustomer;
+
+  /// No description provided for @customerList.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer List'**
+  String get customerList;
+
+  /// No description provided for @balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get balance;
+
+  /// No description provided for @lastActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Activity'**
+  String get lastActivity;
+
+  /// No description provided for @noCustomersFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No customers found'**
+  String get noCustomersFound;
+
+  /// No description provided for @phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phone;
+
+  /// No description provided for @customerName.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Name'**
+  String get customerName;
+
+  /// No description provided for @phoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phoneNumber;
+
+  /// No description provided for @saveCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Customer'**
+  String get saveCustomer;
+
+  /// No description provided for @repaymentAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Repayment Amount'**
+  String get repaymentAmount;
+
+  /// No description provided for @saveRepayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Repayment'**
+  String get saveRepayment;
+
+  /// No description provided for @remainingDebt.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining Debt'**
+  String get remainingDebt;
+
+  /// No description provided for @referenceOrNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference / Note (Optional)'**
+  String get referenceOrNote;
+
+  /// No description provided for @shareSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Summary via Telegram/SMS'**
+  String get shareSummary;
+
+  /// No description provided for @transactionHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction History'**
+  String get transactionHistory;
+
+  /// No description provided for @creditSale.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit Sale'**
+  String get creditSale;
+
+  /// No description provided for @repayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Repayment'**
+  String get repayment;
+
+  /// No description provided for @itemsPurchased.
+  ///
+  /// In en, this message translates to:
+  /// **'Items Purchased'**
+  String get itemsPurchased;
+
+  /// No description provided for @noTransactionsRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions recorded yet'**
+  String get noTransactionsRecorded;
+
+  /// No description provided for @copiedToClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt copied to clipboard!'**
+  String get copiedToClipboard;
+
+  /// No description provided for @fullAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Amount'**
+  String get fullAmount;
+
+  /// No description provided for @debtSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Debt Summary'**
+  String get debtSummary;
+
+  /// No description provided for @copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copy;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @telebirr.
+  ///
+  /// In en, this message translates to:
+  /// **'Telebirr'**
+  String get telebirr;
+
+  /// No description provided for @cbeBirr.
+  ///
+  /// In en, this message translates to:
+  /// **'CBE Birr'**
+  String get cbeBirr;
 }
 
 class _AppLocalizationsDelegate

@@ -42,5 +42,32 @@
 
   "synced": "Synced",
   "syncing": "Syncing",
-  "offline": "Offline"
+  "offline": "Offline",
+
+  "searchCustomer": "Search customer name or phone...",
+  "customerList": "Customer List",
+  "balance": "Balance",
+  "lastActivity": "Last Activity",
+  "noCustomersFound": "No customers found",
+  "phone": "Phone",
+  "customerName": "Customer Name",
+  "phoneNumber": "Phone Number",
+  "saveCustomer": "Save Customer",
+  "repaymentAmount": "Repayment Amount",
+  "saveRepayment": "Save Repayment",
+  "remainingDebt": "Remaining Debt",
+  "referenceOrNote": "Reference / Note (Optional)",
+  "shareSummary": "Share Summary via Telegram/SMS",
+  "transactionHistory": "Transaction History",
+  "creditSale": "Credit Sale",
+  "repayment": "Repayment",
+  "itemsPurchased": "Items Purchased",
+  "noTransactionsRecorded": "No transactions recorded yet",
+  "copiedToClipboard": "Receipt copied to clipboard!",
+  "fullAmount": "Full Amount",
+  "debtSummary": "Debt Summary",
+  "copy": "Copy",
+  "close": "Close",
+  "telebirr": "Telebirr",
+  "cbeBirr": "CBE Birr"
 }

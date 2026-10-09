@@ -85,6 +85,13 @@ class AppDatabase extends _$AppDatabase {
         .getSingleOrNull();
   }
 
+  Stream<CustomersTableData?> watchCustomerById(String id) {
+    return (select(customersTable)
+          ..where((tbl) => tbl.id.equals(id) & tbl.isDeleted.equals(false))
+          ..limit(1))
+        .watchSingleOrNull();
+  }
+
   Future<void> upsertCustomer(CustomersTableCompanion customer) {
     return into(customersTable).insertOnConflictUpdate(customer);
   }
@@ -216,11 +223,24 @@ class AppDatabase extends _$AppDatabase {
         .get();
   }
 
+  Stream<List<SalesTableData>> watchCustomerSales(String customerId) {
+    return (select(salesTable)
+          ..where((tbl) => tbl.customerId.equals(customerId))
+          ..orderBy([(tbl) => OrderingTerm.desc(tbl.createdAt)]))
+        .watch();
+  }
+
   /// Retrieves itemized products for a specific sale
   Future<List<SaleItemsTableData>> getSaleItems(String saleId) {
     return (select(saleItemsTable)
           ..where((tbl) => tbl.saleId.equals(saleId)))
         .get();
+  }
+
+  Stream<List<SaleItemsTableData>> watchSaleItems(String saleId) {
+    return (select(saleItemsTable)
+          ..where((tbl) => tbl.saleId.equals(saleId)))
+        .watch();
   }
 
   /// Retrieves repayments for a customer
@@ -229,6 +249,13 @@ class AppDatabase extends _$AppDatabase {
           ..where((tbl) => tbl.customerId.equals(customerId))
           ..orderBy([(tbl) => OrderingTerm.desc(tbl.createdAt)]))
         .get();
+  }
+
+  Stream<List<DebtRepaymentsTableData>> watchCustomerRepayments(String customerId) {
+    return (select(debtRepaymentsTable)
+          ..where((tbl) => tbl.customerId.equals(customerId))
+          ..orderBy([(tbl) => OrderingTerm.desc(tbl.createdAt)]))
+        .watch();
   }
 
   // -------------------------------------------------------------
