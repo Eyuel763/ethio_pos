@@ -157,18 +157,23 @@ export class SyncService {
       }
     }
 
+    const paymentType = data.payment_type || 'cash';
+    if (!['cash', 'mobile_transfer', 'credit'].includes(paymentType)) {
+      throw new BadRequestException(`Invalid payment_type: ${paymentType}. Allowed: cash, mobile_transfer, credit`);
+    }
+
     // 1. Create Sale Header
     await tx.sale.create({
       data: {
         id: mutation.entity_id,
         shopId,
         customerId: data.customer_id || null,
-        paymentType: data.payment_type,
-        subtotal: new Prisma.Decimal(data.subtotal),
-        discount: new Prisma.Decimal(data.discount || 0),
-        grandTotal: new Prisma.Decimal(data.grand_total),
-        amountPaid: new Prisma.Decimal(data.amount_paid),
-        amountDue: new Prisma.Decimal(data.amount_due),
+        paymentType,
+        subtotal: new Prisma.Decimal(data.subtotal ?? 0),
+        discount: new Prisma.Decimal(data.discount ?? 0),
+        grandTotal: new Prisma.Decimal(data.grand_total ?? 0),
+        amountPaid: new Prisma.Decimal(data.amount_paid ?? 0),
+        amountDue: new Prisma.Decimal(data.amount_due ?? 0),
         createdAt: data.created_at ? new Date(data.created_at) : new Date(),
       },
     });
@@ -187,10 +192,10 @@ export class SyncService {
             data: {
               id: item.product_id,
               shopId,
-              nameAm: item.product_name,
-              nameEn: item.product_name,
-              sellingPrice: new Prisma.Decimal(item.unit_price),
-              stockQuantity: new Prisma.Decimal(-item.quantity),
+              nameAm: item.product_name || 'Product',
+              nameEn: item.product_name || 'Product',
+              sellingPrice: new Prisma.Decimal(item.unit_price ?? 0),
+              stockQuantity: new Prisma.Decimal(-(item.quantity ?? 1)),
             },
           });
         } else {
@@ -199,7 +204,7 @@ export class SyncService {
             where: { id: item.product_id },
             data: {
               stockQuantity: {
-                decrement: new Prisma.Decimal(item.quantity),
+                decrement: new Prisma.Decimal(item.quantity ?? 1),
               },
             },
           });
@@ -211,10 +216,10 @@ export class SyncService {
             id: item.id,
             saleId: mutation.entity_id,
             productId: item.product_id,
-            productName: item.product_name,
-            unitPrice: new Prisma.Decimal(item.unit_price),
-            quantity: new Prisma.Decimal(item.quantity),
-            totalPrice: new Prisma.Decimal(item.total_price),
+            productName: item.product_name || 'Product',
+            unitPrice: new Prisma.Decimal(item.unit_price ?? 0),
+            quantity: new Prisma.Decimal(item.quantity ?? 1),
+            totalPrice: new Prisma.Decimal(item.total_price ?? 0),
           },
         });
       }
@@ -250,7 +255,7 @@ export class SyncService {
         id: mutation.entity_id,
         shopId,
         customerId: data.customer_id,
-        amount: new Prisma.Decimal(data.amount),
+        amount: new Prisma.Decimal(data.amount ?? 0),
         paymentMethod: data.payment_method || 'cash',
         note: data.note || null,
         createdAt: data.created_at ? new Date(data.created_at) : new Date(),
@@ -279,34 +284,65 @@ export class SyncService {
       return;
     }
 
-    await tx.product.upsert({
+    const existing = await tx.product.findUnique({
       where: { id: mutation.entity_id },
-      create: {
-        id: mutation.entity_id,
-        shopId,
-        barcode: data.barcode || null,
-        nameAm: data.name_am,
-        nameEn: data.name_en,
-        category: data.category || 'General',
-        unitType: data.unit_type || 'piece',
-        sellingPrice: new Prisma.Decimal(data.selling_price),
-        costPrice: new Prisma.Decimal(data.cost_price || 0),
-        stockQuantity: new Prisma.Decimal(data.stock_quantity || 0),
-        minStockLevel: new Prisma.Decimal(data.min_stock_level || 5),
-        isDeleted: data.is_deleted || false,
-      },
-      update: {
-        barcode: data.barcode !== undefined ? data.barcode : undefined,
-        nameAm: data.name_am,
-        nameEn: data.name_en,
-        category: data.category,
-        unitType: data.unit_type,
-        sellingPrice: data.selling_price !== undefined ? new Prisma.Decimal(data.selling_price) : undefined,
-        costPrice: data.cost_price !== undefined ? new Prisma.Decimal(data.cost_price) : undefined,
-        minStockLevel: data.min_stock_level !== undefined ? new Prisma.Decimal(data.min_stock_level) : undefined,
-        isDeleted: data.is_deleted !== undefined ? data.is_deleted : undefined,
-      },
     });
+
+    if (!existing) {
+      await tx.product.create({
+        data: {
+          id: mutation.entity_id,
+          shopId,
+          barcode: data.barcode || null,
+          nameAm: data.name_am || data.name_en || 'Product',
+          nameEn: data.name_en || data.name_am || 'Product',
+          category: data.category || 'General',
+          unitType: data.unit_type || 'piece',
+          sellingPrice: new Prisma.Decimal(data.selling_price ?? 0),
+          costPrice: new Prisma.Decimal(data.cost_price ?? 0),
+          stockQuantity: new Prisma.Decimal(data.stock_quantity ?? (data.stock_delta ?? 0)),
+          minStockLevel: new Prisma.Decimal(data.min_stock_level ?? 5),
+          isDeleted: data.is_deleted ?? false,
+        },
+      });
+    } else {
+      let stockUpdate: Prisma.DecimalFieldUpdateOperationsInput | Prisma.Decimal | undefined;
+      if (data.stock_delta !== undefined && data.stock_delta !== null) {
+        stockUpdate = { increment: new Prisma.Decimal(data.stock_delta) };
+      } else if (data.stock_quantity !== undefined && data.stock_quantity !== null) {
+        if (Number(existing.stockQuantity) < 0 && mutation.operation === SyncOperation.CREATE) {
+          // Reconcile stubbed sales with initial stock count
+          stockUpdate = new Prisma.Decimal(data.stock_quantity).plus(existing.stockQuantity);
+        } else {
+          stockUpdate = new Prisma.Decimal(data.stock_quantity);
+        }
+      }
+
+      await tx.product.update({
+        where: { id: mutation.entity_id },
+        data: {
+          barcode: data.barcode !== undefined ? data.barcode : undefined,
+          nameAm: data.name_am ?? undefined,
+          nameEn: data.name_en ?? undefined,
+          category: data.category ?? undefined,
+          unitType: data.unit_type ?? undefined,
+          sellingPrice:
+            data.selling_price !== undefined && data.selling_price !== null
+              ? new Prisma.Decimal(data.selling_price)
+              : undefined,
+          costPrice:
+            data.cost_price !== undefined && data.cost_price !== null
+              ? new Prisma.Decimal(data.cost_price)
+              : undefined,
+          stockQuantity: stockUpdate,
+          minStockLevel:
+            data.min_stock_level !== undefined && data.min_stock_level !== null
+              ? new Prisma.Decimal(data.min_stock_level)
+              : undefined,
+          isDeleted: data.is_deleted !== undefined ? data.is_deleted : undefined,
+        },
+      });
+    }
   }
 
   /**

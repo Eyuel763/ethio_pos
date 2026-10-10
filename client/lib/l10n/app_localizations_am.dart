@@ -43,6 +43,18 @@ class AppLocalizationsAm extends AppLocalizations {
   String get charge => 'ክፈል';
 
   @override
+  String get inStock => 'ክምችት አለ';
+
+  @override
+  String get viewCart => 'የተመረጡትን እይ';
+
+  @override
+  String get hideCart => 'የተመረጡትን ደብቅ';
+
+  @override
+  String get addToCart => 'ጨምር';
+
+  @override
   String get paymentMethod => 'የክፍያ ዘዴ';
 
   @override
@@ -200,4 +212,166 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get cbeBirr => 'ሲቢኢ ብር';
+
+  @override
+  String get inventoryTitle => 'ዕቃዎችና ክምችት';
+
+  @override
+  String get nameEn => 'የዕቃው ስም (እንግሊዝኛ)';
+
+  @override
+  String get nameAm => 'የዕቃው ስም (አማርኛ)';
+
+  @override
+  String get barcode => 'ባርኮድ';
+
+  @override
+  String get category => 'ምድብ';
+
+  @override
+  String get unitType => 'መለኪያ';
+
+  @override
+  String get costPrice => 'የግዢ ዋጋ';
+
+  @override
+  String get initialStock => 'የመጀመሪያ ክምችት';
+
+  @override
+  String get minStockAlert => 'ዝቅተኛ የማስጠንቀቂያ መጠን';
+
+  @override
+  String get currentStock => 'አሁን ያለ ክምችት';
+
+  @override
+  String get quantityToAdd => 'የሚጨመረው መጠን';
+
+  @override
+  String get newTotalStock => 'አዲሱ ጠቅላላ ክምችት';
+
+  @override
+  String get adjustStock => 'ክምችት አስተካክል';
+
+  @override
+  String get saveChanges => 'ለውጦችን መዝግብ';
+
+  @override
+  String get productSaved => 'ዕቃው በተሳካ ሁኔታ ተመዝግቧል!';
+
+  @override
+  String get stockUpdated => 'ክምችቱ በተሳካ ሁኔታ ተስተካክሏል!';
+
+  @override
+  String get noProductsFound => 'ምንም ዕቃ አልተገኘም';
+
+  @override
+  String get pcs => 'ፍሬ';
+
+  @override
+  String get kg => 'ኪ.ግ';
+
+  @override
+  String get liter => 'ሊትር';
+
+  @override
+  String get packet => 'ፓኬት';
+
+  @override
+  String get bundle => 'ጥቅል';
+
+  @override
+  String get loginTitle => 'ወደ መደብርዎ ይግቡ';
+
+  @override
+  String get registerTitle => 'አዲስ መደብር ይመዝግቡ';
+
+  @override
+  String get shopName => 'የመደብሩ ስም';
+
+  @override
+  String get shopNameHint => 'ለምሳሌ፡ ቦሌ ሚኒ ማርኬት';
+
+  @override
+  String get username => 'የተጠቃሚ ስም';
+
+  @override
+  String get usernameHint => 'የተጠቃሚ ስም ያስገቡ';
+
+  @override
+  String get password => 'የይለፍ ቃል';
+
+  @override
+  String get passwordHint => 'ቢያንስ 6 ፊደላት';
+
+  @override
+  String get confirmPassword => 'የይለፍ ቃል ያረጋግጡ';
+
+  @override
+  String get ownerFullName => 'የባለቤት / ሥራ አስኪያጅ ስም';
+
+  @override
+  String get ownerPhone => 'የስልክ ቁጥር';
+
+  @override
+  String get signIn => 'ግባ';
+
+  @override
+  String get registerShopButton => 'መደብሩን መዝግብ';
+
+  @override
+  String get noAccount => 'የመደብር አካውንት የለዎትም?';
+
+  @override
+  String get hasAccount => 'ቀደም ሲል የተመዘገበ አካውንት አለዎት?';
+
+  @override
+  String get signUpPrompt => 'አዲስ መደብር ይመዝግቡ';
+
+  @override
+  String get signInPrompt => 'ግባ';
+
+  @override
+  String get passwordsDoNotMatch => 'የይለፍ ቃሎች አይመሳሰሉም';
+
+  @override
+  String get logout => 'ውጣ';
+
+  @override
+  String get logoutConfirm => 'እርግጠኛ ነዎት ከመደብሩ መውጣት ይፈልጋሉ?';
+
+  @override
+  String get activeShop => 'የአሁኑ መደብር';
+
+  @override
+  String get continueOffline => 'በሙከራ ሁነታ ይቀጥሉ';
+
+  @override
+  String get loginSuccessful => 'በተሳካ ሁኔታ ገብተዋል!';
+
+  @override
+  String get registrationSuccessful => 'መደብሩ በተሳካ ሁኔታ ተመዝግቧል!';
+
+  @override
+  String get continuousScannerTitle => 'ተከታታይ የባርኮድ መቃኛ';
+
+  @override
+  String get alignBarcodeWithinFrame => 'ባርኮዱን በፍሬሙ ውስጥ ያስተካክሉ';
+
+  @override
+  String get scannerDone => 'ጨርስ';
+
+  @override
+  String get productAddedToCart => 'ወደ ጋሪው ተጨምሯል';
+
+  @override
+  String get barcodeNotFound => 'ይህ ባርኮድ በመጋዘኑ ውስጥ አልተገኘም';
+
+  @override
+  String get addNewProductWithBarcode => 'አዲስ ዕቃ መዝግብ';
+
+  @override
+  String get cameraPermissionRequired => 'ባርኮዶችን ለመቃኘት የካሜራ ፈቃድ ያስፈልጋል';
+
+  @override
+  String get itemsScanned => 'በጋሪው ውስጥ ያሉ ዕቃዎች';
 }

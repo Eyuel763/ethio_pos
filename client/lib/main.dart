@@ -1,14 +1,31 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:client/l10n/app_localizations.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/sync/sync_providers.dart';
+import 'features/auth/providers/auth_provider.dart';
+import 'features/auth/screens/login_screen.dart';
 import 'features/shell/main_shell_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const ProviderScope(child: EthioPosApp()));
+  SharedPreferences? prefs;
+  try {
+    prefs = await SharedPreferences.getInstance();
+  } catch (e) {
+    debugPrint('Error loading SharedPreferences: $e');
+  }
+
+  runApp(
+    ProviderScope(
+      overrides: [
+        if (prefs != null) sharedPreferencesProvider.overrideWithValue(prefs),
+      ],
+      child: const EthioPosApp(),
+    ),
+  );
 }
 
 class EthioPosApp extends ConsumerStatefulWidget {
@@ -34,6 +51,7 @@ class _EthioPosAppState extends ConsumerState<EthioPosApp> {
   @override
   Widget build(BuildContext context) {
     final activeLocale = ref.watch(localeProvider);
+    final authState = ref.watch(authProvider);
 
     return MaterialApp(
       title: 'EthioPOS',
@@ -52,7 +70,7 @@ class _EthioPosAppState extends ConsumerState<EthioPosApp> {
           centerTitle: false,
         ),
       ),
-      home: const MainShellScreen(),
+      home: authState.isAuthenticated ? const MainShellScreen() : const LoginScreen(),
     );
   }
 }

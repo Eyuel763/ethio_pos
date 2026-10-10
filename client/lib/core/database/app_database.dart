@@ -67,6 +67,26 @@ class AppDatabase extends _$AppDatabase {
     return into(productsTable).insertOnConflictUpdate(product);
   }
 
+  /// Inserts or updates a product atomically and logs mutation to sync_queue
+  Future<void> upsertProductAtomic({
+    required ProductsTableCompanion product,
+    required String operation,
+    required String syncPayloadJson,
+  }) {
+    return transaction(() async {
+      await into(productsTable).insertOnConflictUpdate(product);
+
+      await into(syncQueueTable).insert(
+        SyncQueueTableCompanion.insert(
+          entityType: 'product',
+          entityId: product.id.value,
+          operation: operation,
+          payload: syncPayloadJson,
+        ),
+      );
+    });
+  }
+
   // -------------------------------------------------------------
   // CUSTOMERS & LEDGER QUERIES & OPERATIONS
   // -------------------------------------------------------------
@@ -195,12 +215,14 @@ class AppDatabase extends _$AppDatabase {
   Future<void> adjustStockAtomic({
     required String productId,
     required double newQuantity,
+    double? newCostPrice,
     required String syncPayloadJson,
   }) {
     return transaction(() async {
       await (update(productsTable)..where((tbl) => tbl.id.equals(productId)))
           .write(ProductsTableCompanion(
         stockQuantity: Value(newQuantity),
+        costPrice: newCostPrice != null ? Value(newCostPrice) : const Value.absent(),
         updatedAt: Value(DateTime.now()),
       ));
 

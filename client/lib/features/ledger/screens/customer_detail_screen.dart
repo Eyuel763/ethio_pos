@@ -315,7 +315,10 @@ class CustomerDetailScreen extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 6),
-            Row(
+            Wrap(
+              spacing: 6,
+              runSpacing: 2,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 Text(
                   '${l10n?.paymentMethod ?? 'Method'}: ${entry.paymentMethod}',
@@ -323,7 +326,7 @@ class CustomerDetailScreen extends ConsumerWidget {
                 ),
                 if (entry.note != null && entry.note!.isNotEmpty) ...[
                   Text(
-                    ' | ${entry.note}',
+                    '• ${entry.note}',
                     style: TextStyle(fontSize: 12, color: Colors.grey.shade700),
                   ),
                 ],
@@ -369,10 +372,11 @@ class CustomerDetailScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
+                const SizedBox(width: 8),
                 Text(
                   '+ ${CurrencyFormatter.format(entry.amountDue, isAmharic: isAmharic)}',
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Colors.red.shade800,
                   ),
@@ -394,15 +398,33 @@ class CustomerDetailScreen extends ConsumerWidget {
               const SizedBox(height: 6),
             ],
 
+            const Divider(height: 12, thickness: 0.5),
+
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  '${l10n?.amountPaidNow ?? 'Paid'}: ${CurrencyFormatter.format(entry.amountPaid, isAmharic: isAmharic)} | ${l10n?.amountToCredit ?? 'To Debt'}: ${CurrencyFormatter.format(entry.amountDue, isAmharic: isAmharic)}',
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey.shade700,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${l10n?.amountPaidNow ?? 'Paid'}: ${CurrencyFormatter.format(entry.amountPaid, isAmharic: isAmharic)}',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey.shade700,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        '${l10n?.amountToCredit ?? 'To Debt'}: ${CurrencyFormatter.format(entry.amountDue, isAmharic: isAmharic)}',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red.shade800,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 InkWell(
@@ -419,15 +441,29 @@ class CustomerDetailScreen extends ConsumerWidget {
                       builder: (_) => DebtReceiptDialog(receiptText: receipt),
                     );
                   },
-                  child: Row(
-                    children: [
-                      const Icon(Icons.share, size: 12, color: Colors.blueGrey),
-                      const SizedBox(width: 2),
-                      Text(
-                        l10n?.shareReceipt ?? 'Receipt',
-                        style: const TextStyle(fontSize: 11, color: Colors.blueGrey, decoration: TextDecoration.underline),
-                      ),
-                    ],
+                  borderRadius: BorderRadius.circular(6),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blueGrey.shade300),
+                      borderRadius: BorderRadius.circular(6),
+                      color: Colors.white.withValues(alpha: 0.8),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.share, size: 12, color: Colors.blueGrey),
+                        const SizedBox(width: 4),
+                        Text(
+                          l10n?.shareReceipt ?? 'Receipt',
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.blueGrey,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

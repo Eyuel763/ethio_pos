@@ -164,6 +164,30 @@ abstract class AppLocalizations {
   /// **'CHARGE'**
   String get charge;
 
+  /// No description provided for @inStock.
+  ///
+  /// In en, this message translates to:
+  /// **'in stock'**
+  String get inStock;
+
+  /// No description provided for @viewCart.
+  ///
+  /// In en, this message translates to:
+  /// **'View Cart'**
+  String get viewCart;
+
+  /// No description provided for @hideCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide Cart'**
+  String get hideCart;
+
+  /// No description provided for @addToCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get addToCart;
+
   /// No description provided for @paymentMethod.
   ///
   /// In en, this message translates to:
@@ -481,6 +505,330 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'CBE Birr'**
   String get cbeBirr;
+
+  /// No description provided for @inventoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory & Stock'**
+  String get inventoryTitle;
+
+  /// No description provided for @nameEn.
+  ///
+  /// In en, this message translates to:
+  /// **'Name (English)'**
+  String get nameEn;
+
+  /// No description provided for @nameAm.
+  ///
+  /// In en, this message translates to:
+  /// **'Name (Amharic)'**
+  String get nameAm;
+
+  /// No description provided for @barcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode'**
+  String get barcode;
+
+  /// No description provided for @category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
+
+  /// No description provided for @unitType.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get unitType;
+
+  /// No description provided for @costPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Cost Price'**
+  String get costPrice;
+
+  /// No description provided for @initialStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Initial Stock'**
+  String get initialStock;
+
+  /// No description provided for @minStockAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Min Stock Alert Level'**
+  String get minStockAlert;
+
+  /// No description provided for @currentStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Stock'**
+  String get currentStock;
+
+  /// No description provided for @quantityToAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity to Add'**
+  String get quantityToAdd;
+
+  /// No description provided for @newTotalStock.
+  ///
+  /// In en, this message translates to:
+  /// **'New Total Stock'**
+  String get newTotalStock;
+
+  /// No description provided for @adjustStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust Stock'**
+  String get adjustStock;
+
+  /// No description provided for @saveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get saveChanges;
+
+  /// No description provided for @productSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Product saved successfully!'**
+  String get productSaved;
+
+  /// No description provided for @stockUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock updated successfully!'**
+  String get stockUpdated;
+
+  /// No description provided for @noProductsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No products found'**
+  String get noProductsFound;
+
+  /// No description provided for @pcs.
+  ///
+  /// In en, this message translates to:
+  /// **'pcs'**
+  String get pcs;
+
+  /// No description provided for @kg.
+  ///
+  /// In en, this message translates to:
+  /// **'kg'**
+  String get kg;
+
+  /// No description provided for @liter.
+  ///
+  /// In en, this message translates to:
+  /// **'liter'**
+  String get liter;
+
+  /// No description provided for @packet.
+  ///
+  /// In en, this message translates to:
+  /// **'packet'**
+  String get packet;
+
+  /// No description provided for @bundle.
+  ///
+  /// In en, this message translates to:
+  /// **'bundle'**
+  String get bundle;
+
+  /// No description provided for @loginTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In to Your Shop'**
+  String get loginTitle;
+
+  /// No description provided for @registerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Register New Shop'**
+  String get registerTitle;
+
+  /// No description provided for @shopName.
+  ///
+  /// In en, this message translates to:
+  /// **'Shop Name'**
+  String get shopName;
+
+  /// No description provided for @shopNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Bole Mini Market'**
+  String get shopNameHint;
+
+  /// No description provided for @username.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get username;
+
+  /// No description provided for @usernameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your username'**
+  String get usernameHint;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @passwordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 6 characters'**
+  String get passwordHint;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// No description provided for @ownerFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner / Manager Name'**
+  String get ownerFullName;
+
+  /// No description provided for @ownerPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get ownerPhone;
+
+  /// No description provided for @signIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get signIn;
+
+  /// No description provided for @registerShopButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Shop Account'**
+  String get registerShopButton;
+
+  /// No description provided for @noAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have a shop account?'**
+  String get noAccount;
+
+  /// No description provided for @hasAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get hasAccount;
+
+  /// No description provided for @signUpPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Register New Shop'**
+  String get signUpPrompt;
+
+  /// No description provided for @signInPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get signInPrompt;
+
+  /// No description provided for @passwordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// No description provided for @logoutConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to log out of this shop?'**
+  String get logoutConfirm;
+
+  /// No description provided for @activeShop.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Shop'**
+  String get activeShop;
+
+  /// No description provided for @continueOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue in Demo Mode'**
+  String get continueOffline;
+
+  /// No description provided for @loginSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in successfully!'**
+  String get loginSuccessful;
+
+  /// No description provided for @registrationSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Shop registered successfully!'**
+  String get registrationSuccessful;
+
+  /// No description provided for @continuousScannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continuous Barcode Scanner'**
+  String get continuousScannerTitle;
+
+  /// No description provided for @alignBarcodeWithinFrame.
+  ///
+  /// In en, this message translates to:
+  /// **'Align barcode within the target frame'**
+  String get alignBarcodeWithinFrame;
+
+  /// No description provided for @scannerDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get scannerDone;
+
+  /// No description provided for @productAddedToCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to cart'**
+  String get productAddedToCart;
+
+  /// No description provided for @barcodeNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode not found in catalog'**
+  String get barcodeNotFound;
+
+  /// No description provided for @addNewProductWithBarcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Product'**
+  String get addNewProductWithBarcode;
+
+  /// No description provided for @cameraPermissionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera permission is required to scan barcodes'**
+  String get cameraPermissionRequired;
+
+  /// No description provided for @itemsScanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Items in cart'**
+  String get itemsScanned;
 }
 
 class _AppLocalizationsDelegate

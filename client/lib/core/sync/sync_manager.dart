@@ -65,7 +65,9 @@ class SyncManager {
 
   void _emitState(SyncState state) {
     _currentState = state;
-    _syncStateController.add(state);
+    if (!_syncStateController.isClosed) {
+      _syncStateController.add(state);
+    }
   }
 
   void updateAuthToken(String token) {
@@ -89,10 +91,10 @@ class SyncManager {
   Future<void> triggerSync() async {
     if (_isSyncing) return;
     _isSyncing = true;
-
+    int pendingCount = _currentState.pendingCount;
     try {
       final pendingOperations = await database.getPendingSyncOperations(limit: 50);
-      final pendingCount = pendingOperations.length;
+      pendingCount = pendingOperations.length;
 
       _emitState(_currentState.copyWith(
         status: SyncStatus.syncing,
@@ -117,14 +119,26 @@ class SyncManager {
       ));
     } on DioException catch (dioErr) {
       debugPrint('[SyncManager] Network/Dio error: ${dioErr.message}');
+      int count = pendingCount;
+      try {
+        final remaining = await database.getPendingSyncOperations(limit: 50);
+        count = remaining.length;
+      } catch (_) {}
       _emitState(_currentState.copyWith(
         status: SyncStatus.offline,
+        pendingCount: count,
         errorMessage: dioErr.message ?? 'Network connection unavailable',
       ));
     } catch (e) {
       debugPrint('[SyncManager] Sync error: $e');
+      int count = pendingCount;
+      try {
+        final remaining = await database.getPendingSyncOperations(limit: 50);
+        count = remaining.length;
+      } catch (_) {}
       _emitState(_currentState.copyWith(
         status: SyncStatus.offline,
+        pendingCount: count,
         errorMessage: e.toString(),
       ));
     } finally {
@@ -171,33 +185,39 @@ class SyncManager {
       headers['Authorization'] = 'Bearer $authToken';
     }
 
-    final response = await dio.post(
-      '/api/v1/sync/push',
-      data: requestBody,
-      options: Options(headers: headers),
-    );
+    try {
+      final response = await dio.post(
+        '/api/v1/sync/push',
+        data: requestBody,
+        options: Options(headers: headers),
+      );
 
-    if (response.statusCode == 200 && response.data != null) {
-      final results = response.data['results'] as List<dynamic>?;
-      if (results != null) {
-        final acknowledgedIds = <int>[];
-        for (final item in results) {
-          if (item['status'] == 'SUCCESS') {
-            acknowledgedIds.add(item['sync_id'] as int);
-          } else {
-            // Increment retry count on failure
-            await database.incrementSyncRetry(item['sync_id'] as int);
+      if (response.statusCode == 200 && response.data != null) {
+        final results = response.data['results'] as List<dynamic>?;
+        if (results != null) {
+          final acknowledgedIds = <int>[];
+          for (final item in results) {
+            if (item['status'] == 'SUCCESS') {
+              acknowledgedIds.add(item['sync_id'] as int);
+            } else {
+              // Increment retry count on failure
+              await database.incrementSyncRetry(item['sync_id'] as int);
+            }
+          }
+
+          // Safely remove acknowledged entries from SQLite outbox queue
+          if (acknowledgedIds.isNotEmpty) {
+            await database.removeAcknowledgedSync(acknowledgedIds);
           }
         }
-
-        // Safely remove acknowledged entries from SQLite outbox queue
-        if (acknowledgedIds.isNotEmpty) {
-          await database.removeAcknowledgedSync(acknowledgedIds);
-        }
+      } else {
+        // Revert status to PENDING on non-200 responses
+        await database.markSyncStatus(operationIds, 'PENDING');
       }
-    } else {
-      // Revert status to PENDING on non-200 responses
+    } catch (_) {
+      // Revert status to PENDING on network or unexpected errors so they are retried
       await database.markSyncStatus(operationIds, 'PENDING');
+      rethrow;
     }
   }
 
@@ -227,19 +247,29 @@ class SyncManager {
         final products = data['products'] as List<dynamic>?;
         if (products != null) {
           for (final p in products) {
+            final productId = p['id'] as String;
+            final serverStock = _parseDouble(p['stockQuantity'], 0.0);
+
+            // Guard: protect local positive stock from negative server stubs
+            final localProduct = await database.getProductById(productId);
+            double resolvedStock = serverStock;
+            if (serverStock < 0 && localProduct != null && localProduct.stockQuantity >= 0) {
+              resolvedStock = localProduct.stockQuantity;
+            }
+
             await database.upsertProduct(
               ProductsTableCompanion(
-                id: drift.Value(p['id']),
+                id: drift.Value(productId),
                 shopId: drift.Value(p['shopId'] ?? shopId),
                 barcode: drift.Value(p['barcode']),
-                nameAm: drift.Value(p['nameAm']),
-                nameEn: drift.Value(p['nameEn']),
+                nameAm: drift.Value(p['nameAm'] ?? ''),
+                nameEn: drift.Value(p['nameEn'] ?? ''),
                 category: drift.Value(p['category'] ?? 'General'),
                 unitType: drift.Value(p['unitType'] ?? 'piece'),
-                sellingPrice: drift.Value((p['sellingPrice'] as num).toDouble()),
-                costPrice: drift.Value((p['costPrice'] as num?)?.toDouble() ?? 0.0),
-                stockQuantity: drift.Value((p['stockQuantity'] as num?)?.toDouble() ?? 0.0),
-                minStockLevel: drift.Value((p['minStockLevel'] as num?)?.toDouble() ?? 5.0),
+                sellingPrice: drift.Value(_parseDouble(p['sellingPrice'], 0.0)),
+                costPrice: drift.Value(_parseDouble(p['costPrice'], 0.0)),
+                stockQuantity: drift.Value(resolvedStock),
+                minStockLevel: drift.Value(_parseDouble(p['minStockLevel'], 5.0)),
                 isDeleted: drift.Value(p['isDeleted'] ?? false),
               ),
             );
@@ -254,9 +284,9 @@ class SyncManager {
               CustomersTableCompanion(
                 id: drift.Value(c['id']),
                 shopId: drift.Value(c['shopId'] ?? shopId),
-                fullName: drift.Value(c['fullName']),
+                fullName: drift.Value(c['fullName'] ?? ''),
                 phoneNumber: drift.Value(c['phoneNumber']),
-                totalDebt: drift.Value((c['totalDebt'] as num?)?.toDouble() ?? 0.0),
+                totalDebt: drift.Value(_parseDouble(c['totalDebt'], 0.0)),
                 isDeleted: drift.Value(c['isDeleted'] ?? false),
               ),
             );
@@ -264,6 +294,13 @@ class SyncManager {
         }
       }
     }
+  }
+
+  double _parseDouble(dynamic value, [double defaultValue = 0.0]) {
+    if (value == null) return defaultValue;
+    if (value is num) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? defaultValue;
+    return defaultValue;
   }
 
   void dispose() {
