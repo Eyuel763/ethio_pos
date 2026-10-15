@@ -99,7 +99,9 @@ class _ProductCatalogListState extends ConsumerState<ProductCatalogList> {
               itemBuilder: (context, index) {
                 final cat = categoryList[index];
                 final isSelected = _selectedCategory == cat;
-                final catLabel = cat == 'All' ? (l10n?.allCategories ?? 'All') : cat;
+                final catLabel = cat == 'All'
+                    ? (l10n?.allCategories ?? 'All')
+                    : CategoryLocalizer.getLocalizedName(cat, isAmharic: isAmharic);
 
                 return ChoiceChip(
                   label: Text(

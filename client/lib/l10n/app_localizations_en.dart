@@ -375,4 +375,38 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get itemsScanned => 'Items in cart';
+
+  @override
+  String get scanBarcodePrompt => 'Scan Barcode';
+
+  @override
+  String get barcodeAssigned => 'Barcode scanned successfully';
+
+  @override
+  String get duplicateBarcodeWarning =>
+      'A product with this barcode already exists';
+
+  @override
+  String get categoryGeneral => 'General';
+
+  @override
+  String get categoryGroceries => 'Groceries';
+
+  @override
+  String get categoryBakery => 'Bakery';
+
+  @override
+  String get categoryDairy => 'Dairy';
+
+  @override
+  String get categoryBeverages => 'Beverages';
+
+  @override
+  String get categorySpices => 'Spices';
+
+  @override
+  String get categoryFresh => 'Fresh / Produce';
+
+  @override
+  String get categoryHousehold => 'Household';
 }

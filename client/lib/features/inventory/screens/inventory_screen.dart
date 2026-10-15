@@ -7,6 +7,7 @@ import 'package:client/l10n/app_localizations.dart';
 import '../providers/inventory_providers.dart';
 import '../widgets/adjust_stock_modal.dart';
 import '../widgets/product_form_modal.dart';
+import '../../checkout/screens/barcode_scanner_screen.dart';
 
 class InventoryScreen extends ConsumerStatefulWidget {
   const InventoryScreen({super.key});
@@ -70,6 +71,23 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen> {
                       fillColor: theme.colorScheme.surface,
                     ),
                   ),
+                ),
+                const SizedBox(width: 8),
+                IconButton(
+                  tooltip: l10n?.scanBarcodePrompt ?? 'Scan Barcode',
+                  style: IconButton.styleFrom(
+                    backgroundColor: theme.colorScheme.primary.withValues(alpha: 0.1),
+                    foregroundColor: theme.colorScheme.primary,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
+                  icon: const Icon(Icons.qr_code_scanner, size: 22),
+                  onPressed: () async {
+                    final scannedCode = await BarcodeScannerScreen.scanBarcode(context);
+                    if (scannedCode != null && scannedCode.isNotEmpty && context.mounted) {
+                      _searchController.text = scannedCode;
+                      ref.read(inventorySearchQueryProvider.notifier).setQuery(scannedCode);
+                    }
+                  },
                 ),
                 const SizedBox(width: 8),
                 ElevatedButton.icon(
@@ -298,7 +316,7 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen> {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          product.category,
+                          CategoryLocalizer.getLocalizedName(product.category, isAmharic: isAmharic),
                           style: TextStyle(fontSize: 11, color: Colors.grey.shade700),
                         ),
                       ),

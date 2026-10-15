@@ -7,7 +7,7 @@ class AppConfig {
     if (envUrl.isNotEmpty) {
       return envUrl;
     }
-    return 'http://192.168.1.7:3001';
+    return 'http://192.168.1.4:3001';
   }
 }
 

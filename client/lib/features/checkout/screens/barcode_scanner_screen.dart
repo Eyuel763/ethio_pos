@@ -10,12 +10,29 @@ import 'package:client/features/inventory/widgets/product_form_modal.dart';
 import 'package:client/l10n/app_localizations.dart';
 
 class BarcodeScannerScreen extends ConsumerStatefulWidget {
-  const BarcodeScannerScreen({super.key});
+  /// When [isPickMode] is true, the screen closes and returns the scanned barcode string
+  /// upon first successful detection instead of adding products to the cart.
+  final bool isPickMode;
 
+  const BarcodeScannerScreen({
+    super.key,
+    this.isPickMode = false,
+  });
+
+  /// Opens the continuous scanner for POS checkout cart building.
   static Future<void> push(BuildContext context) {
     return Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => const BarcodeScannerScreen(),
+        builder: (_) => const BarcodeScannerScreen(isPickMode: false),
+      ),
+    );
+  }
+
+  /// Opens the scanner in single-scan pick mode and returns the scanned barcode string.
+  static Future<String?> scanBarcode(BuildContext context) {
+    return Navigator.of(context).push<String>(
+      MaterialPageRoute(
+        builder: (_) => const BarcodeScannerScreen(isPickMode: true),
       ),
     );
   }
@@ -73,6 +90,12 @@ class _BarcodeScannerScreenState extends ConsumerState<BarcodeScannerScreen> {
     // Haptic & Sound Feedback
     HapticFeedback.mediumImpact();
     SystemSound.play(SystemSoundType.click);
+
+    // If running in pick mode (e.g. from Add Product modal), return the scanned barcode immediately
+    if (widget.isPickMode) {
+      Navigator.of(context).pop(barcode);
+      return;
+    }
 
     final db = ref.read(databaseProvider);
     final isAmharic = ref.read(localeProvider.notifier).isAmharic;
@@ -202,7 +225,9 @@ class _BarcodeScannerScreenState extends ConsumerState<BarcodeScannerScreen> {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  l10n?.alignBarcodeWithinFrame ?? 'Align barcode within the target frame',
+                  widget.isPickMode
+                      ? (l10n?.scanBarcodePrompt ?? 'Scan Barcode')
+                      : (l10n?.alignBarcodeWithinFrame ?? 'Align barcode within the target frame'),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 13,
@@ -214,7 +239,7 @@ class _BarcodeScannerScreenState extends ConsumerState<BarcodeScannerScreen> {
           ),
 
           // 5. Dynamic Scan Status Toast / Action Banner
-          if (_statusMessage != null)
+          if (_statusMessage != null && !widget.isPickMode)
             Positioned(
               bottom: 110,
               left: 16,
@@ -278,17 +303,18 @@ class _BarcodeScannerScreenState extends ConsumerState<BarcodeScannerScreen> {
               ),
             ),
 
-          // 6. Bottom Continuous Cart Counter & Finish Bar
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(20, 14, 20, 24),
-              decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha: 0.85),
-                border: const Border(top: BorderSide(color: Colors.white24, width: 0.5)),
-              ),
+          // 6. Bottom Continuous Cart Counter & Finish Bar (checkout mode only)
+          if (!widget.isPickMode)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(20, 14, 20, 24),
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(alpha: 0.85),
+                  border: const Border(top: BorderSide(color: Colors.white24, width: 0.5)),
+                ),
               child: Row(
                 children: [
                   Expanded(

@@ -374,4 +374,37 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get itemsScanned => 'በጋሪው ውስጥ ያሉ ዕቃዎች';
+
+  @override
+  String get scanBarcodePrompt => 'ባርኮድ ቃኝ';
+
+  @override
+  String get barcodeAssigned => 'ባርኮዱ በተሳካ ሁኔታ ተቃኝቷል';
+
+  @override
+  String get duplicateBarcodeWarning => 'ይህ ባርኮድ አስቀድሞ በሌላ ዕቃ ተመዝግቧል';
+
+  @override
+  String get categoryGeneral => 'አጠቃላይ';
+
+  @override
+  String get categoryGroceries => 'የሸቀጣ ሸቀጥ';
+
+  @override
+  String get categoryBakery => 'ዳቦና መጋገሪያ';
+
+  @override
+  String get categoryDairy => 'የወተት ተዋጽኦ';
+
+  @override
+  String get categoryBeverages => 'መጠጦች';
+
+  @override
+  String get categorySpices => 'ቅመማ ቅመም';
+
+  @override
+  String get categoryFresh => 'አትክልትና ፍራፍሬ';
+
+  @override
+  String get categoryHousehold => 'የቤት ውስጥ ዕቃዎች';
 }

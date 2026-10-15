@@ -129,5 +129,16 @@
   "barcodeNotFound": "Barcode not found in catalog",
   "addNewProductWithBarcode": "Add Product",
   "cameraPermissionRequired": "Camera permission is required to scan barcodes",
-  "itemsScanned": "Items in cart"
+  "itemsScanned": "Items in cart",
+  "scanBarcodePrompt": "Scan Barcode",
+  "barcodeAssigned": "Barcode scanned successfully",
+  "duplicateBarcodeWarning": "A product with this barcode already exists",
+  "categoryGeneral": "General",
+  "categoryGroceries": "Groceries",
+  "categoryBakery": "Bakery",
+  "categoryDairy": "Dairy",
+  "categoryBeverages": "Beverages",
+  "categorySpices": "Spices",
+  "categoryFresh": "Fresh / Produce",
+  "categoryHousehold": "Household"
 }

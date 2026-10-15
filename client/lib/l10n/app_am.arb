@@ -129,5 +129,16 @@
   "barcodeNotFound": "ይህ ባርኮድ በመጋዘኑ ውስጥ አልተገኘም",
   "addNewProductWithBarcode": "አዲስ ዕቃ መዝግብ",
   "cameraPermissionRequired": "ባርኮዶችን ለመቃኘት የካሜራ ፈቃድ ያስፈልጋል",
-  "itemsScanned": "በጋሪው ውስጥ ያሉ ዕቃዎች"
+  "itemsScanned": "በጋሪው ውስጥ ያሉ ዕቃዎች",
+  "scanBarcodePrompt": "ባርኮድ ቃኝ",
+  "barcodeAssigned": "ባርኮዱ በተሳካ ሁኔታ ተቃኝቷል",
+  "duplicateBarcodeWarning": "ይህ ባርኮድ አስቀድሞ በሌላ ዕቃ ተመዝግቧል",
+  "categoryGeneral": "አጠቃላይ",
+  "categoryGroceries": "የሸቀጣ ሸቀጥ",
+  "categoryBakery": "ዳቦና መጋገሪያ",
+  "categoryDairy": "የወተት ተዋጽኦ",
+  "categoryBeverages": "መጠጦች",
+  "categorySpices": "ቅመማ ቅመም",
+  "categoryFresh": "አትክልትና ፍራፍሬ",
+  "categoryHousehold": "የቤት ውስጥ ዕቃዎች"
 }

@@ -8,6 +8,7 @@ import 'package:client/core/providers/database_providers.dart';
 import 'package:client/core/sync/sync_providers.dart';
 import 'package:client/core/utils/formatters.dart';
 import 'package:client/core/providers/locale_provider.dart';
+import 'package:client/features/checkout/screens/barcode_scanner_screen.dart';
 import 'package:client/l10n/app_localizations.dart';
 
 class ProductFormModal extends ConsumerStatefulWidget {
@@ -98,6 +99,31 @@ class _ProductFormModalState extends ConsumerState<ProductFormModal> {
     _stockQuantityController.dispose();
     _minStockController.dispose();
     super.dispose();
+  }
+
+  Future<void> _scanBarcode() async {
+    final scannedCode = await BarcodeScannerScreen.scanBarcode(context);
+    if (scannedCode != null && scannedCode.isNotEmpty) {
+      setState(() {
+        _barcodeController.text = scannedCode;
+      });
+
+      // Check if product already exists with this barcode
+      if (mounted) {
+        final db = ref.read(databaseProvider);
+        final existing = await db.getProductByBarcode(scannedCode);
+        if (existing != null && existing.id != widget.product?.id && mounted) {
+          final l10n = AppLocalizations.of(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('${l10n?.duplicateBarcodeWarning ?? "A product with this barcode already exists"}: ${existing.nameEn}'),
+              backgroundColor: Colors.orange.shade800,
+              duration: const Duration(seconds: 3),
+            ),
+          );
+        }
+      }
+    }
   }
 
   Future<void> _handleSave() async {
@@ -274,20 +300,30 @@ class _ProductFormModalState extends ConsumerState<ProductFormModal> {
               ),
               const SizedBox(height: 12),
 
-              // Barcode + Generate button
+              // Barcode + Camera Scan & Generate buttons
               TextFormField(
                 controller: _barcodeController,
                 decoration: InputDecoration(
                   labelText: l10n?.barcode ?? 'Barcode',
                   hintText: 'Scan or type barcode',
-                  prefixIcon: const Icon(Icons.qr_code_scanner),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.auto_awesome, size: 20),
-                    tooltip: 'Generate Barcode',
-                    onPressed: () {
-                      final generated = DateTime.now().millisecondsSinceEpoch.toString();
-                      _barcodeController.text = generated;
-                    },
+                  prefixIcon: const Icon(Icons.qr_code),
+                  suffixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.camera_alt_outlined, size: 22, color: Color(0xFF1B5E20)),
+                        tooltip: l10n?.scanBarcodePrompt ?? 'Scan Barcode',
+                        onPressed: _scanBarcode,
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.auto_awesome, size: 20),
+                        tooltip: 'Generate Barcode',
+                        onPressed: () {
+                          final generated = DateTime.now().millisecondsSinceEpoch.toString();
+                          _barcodeController.text = generated;
+                        },
+                      ),
+                    ],
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -309,7 +345,9 @@ class _ProductFormModalState extends ConsumerState<ProductFormModal> {
                         ),
                       ),
                       items: _categories.map((c) {
-                        return DropdownMenuItem(value: c, child: Text(c));
+                        final isAmharic = ref.watch(localeProvider.notifier).isAmharic;
+                        final localized = CategoryLocalizer.getLocalizedName(c, isAmharic: isAmharic);
+                        return DropdownMenuItem(value: c, child: Text(localized));
                       }).toList(),
                       onChanged: (val) {
                         if (val != null) setState(() => _category = val);

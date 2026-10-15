@@ -829,6 +829,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Items in cart'**
   String get itemsScanned;
+
+  /// No description provided for @scanBarcodePrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Barcode'**
+  String get scanBarcodePrompt;
+
+  /// No description provided for @barcodeAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode scanned successfully'**
+  String get barcodeAssigned;
+
+  /// No description provided for @duplicateBarcodeWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'A product with this barcode already exists'**
+  String get duplicateBarcodeWarning;
+
+  /// No description provided for @categoryGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get categoryGeneral;
+
+  /// No description provided for @categoryGroceries.
+  ///
+  /// In en, this message translates to:
+  /// **'Groceries'**
+  String get categoryGroceries;
+
+  /// No description provided for @categoryBakery.
+  ///
+  /// In en, this message translates to:
+  /// **'Bakery'**
+  String get categoryBakery;
+
+  /// No description provided for @categoryDairy.
+  ///
+  /// In en, this message translates to:
+  /// **'Dairy'**
+  String get categoryDairy;
+
+  /// No description provided for @categoryBeverages.
+  ///
+  /// In en, this message translates to:
+  /// **'Beverages'**
+  String get categoryBeverages;
+
+  /// No description provided for @categorySpices.
+  ///
+  /// In en, this message translates to:
+  /// **'Spices'**
+  String get categorySpices;
+
+  /// No description provided for @categoryFresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Fresh / Produce'**
+  String get categoryFresh;
+
+  /// No description provided for @categoryHousehold.
+  ///
+  /// In en, this message translates to:
+  /// **'Household'**
+  String get categoryHousehold;
 }
 
 class _AppLocalizationsDelegate
