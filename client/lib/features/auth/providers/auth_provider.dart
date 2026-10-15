@@ -205,32 +205,29 @@ class AuthNotifier extends Notifier<AuthState> {
     }
   }
 
-  /// Continue in Demo / Offline Mode using predefined store
+  /// Continue in Demo / Offline Mode using a local offline store profile
   Future<void> loginDemoMode() async {
-    const demoToken = AppConfig.defaultDevToken;
-    const demoShopId = AppConfig.defaultShopId;
-    const demoShopName = 'Bole Supermarket (Demo)';
-    const demoUsername = 'bole_admin';
+    const demoShopId = 'local-demo-shop-001';
+    const demoShopName = 'Local Demo Store';
+    const demoUsername = 'demo_user';
 
     final prefs = ref.read(sharedPreferencesProvider);
-    await prefs?.setString(_keyToken, demoToken);
+    await prefs?.remove(_keyToken);
     await prefs?.setString(_keyShopId, demoShopId);
     await prefs?.setString(_keyShopName, demoShopName);
     await prefs?.setString(_keyUsername, demoUsername);
     await prefs?.setBool(_keyIsDemo, true);
 
-    ref.read(authTokenProvider.notifier).setToken(demoToken);
+    ref.read(authTokenProvider.notifier).setToken(null);
     ref.read(shopIdProvider.notifier).setShopId(demoShopId);
 
     state = const AuthState.authenticated(
-      token: demoToken,
+      token: null,
       shopId: demoShopId,
       shopName: demoShopName,
       username: demoUsername,
       isOfflineDemo: true,
     );
-
-    ref.read(syncManagerProvider).triggerSync();
   }
 
   /// Sign out and clear stored session

@@ -167,7 +167,7 @@ class _RegisterShopScreenState extends ConsumerState<RegisterShopScreen> {
                   controller: _usernameController,
                   decoration: InputDecoration(
                     labelText: l10n?.username ?? 'Username',
-                    hintText: isAmharic ? 'የመግቢያ ስም (ላቲን/እንግሊዝኛ)' : 'e.g., bole_admin',
+                    hintText: isAmharic ? 'የመግቢያ ስም (ላቲን/እንግሊዝኛ)' : 'e.g., shop_admin',
                     prefixIcon: const Icon(Icons.account_circle_outlined, size: 20),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     filled: true,

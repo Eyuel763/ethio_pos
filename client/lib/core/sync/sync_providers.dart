@@ -21,7 +21,7 @@ final dioProvider = Provider<Dio>((ref) {
 /// State notifier for authenticated shop ID
 class ShopIdNotifier extends Notifier<String> {
   @override
-  String build() => AppConfig.defaultShopId;
+  String build() => '';
 
   void setShopId(String id) => state = id;
 }
@@ -31,7 +31,7 @@ final shopIdProvider = NotifierProvider<ShopIdNotifier, String>(ShopIdNotifier.n
 /// State notifier for auth token
 class AuthTokenNotifier extends Notifier<String?> {
   @override
-  String? build() => AppConfig.defaultDevToken;
+  String? build() => null;
 
   void setToken(String? token) => state = token;
 }

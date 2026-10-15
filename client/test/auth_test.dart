@@ -67,7 +67,7 @@ void main() {
       final state = container.read(authProvider);
       expect(state.isAuthenticated, true);
       expect(state.isOfflineDemo, true);
-      expect(state.username, 'bole_admin');
+      expect(state.username, 'demo_user');
       expect(state.shopName, contains('Demo'));
 
       // Test logout
